@@ -9,15 +9,26 @@ function buyUpgrade() {
 	firstUpgrade.click()
 }
 
-function getMostExpensiveProductId() {
-	var products = document.getElementsByClassName("product unlocked enabled");
+function getMostExpensiveUnclockedProductId() {
+	var products = document.getElementsByClassName("product unlocked");
 	var lastProductId = products.length-1;	
 	return lastProductId;
 }
 
+function getMostExpensiveProductId() {
+	var products = document.getElementsByClassName("product unlocked enabled");
+	var lastProductId = products.length-1;
+	return lastProductId; 
+}
+
+function isMakeSenseToUpgradeProduct(threshold = 5) {
+	// there is no point to upgrade first products at later gameplay, so update only more expensive products
+	return (getMostExpensiveProductId() + threshold  > getMostExpensiveUnclockedProductId() )
+}
+
 async function buyProducts(sleepTime = 1) {
-	while( getMostExpensiveProductId() != -1) {
-		var productId = "product"+getMostExpensiveProductId();
+	while( getMostExpensiveProductId() != -1 && isMakeSenseToUpgradeProduct() ) {
+		var productId = "product" + getMostExpensiveProductId();
 		var product = document.getElementById(productId);
 		product.click();
 		await sleep(sleepTime);
