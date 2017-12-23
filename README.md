@@ -1,2 +1,3 @@
 # cookie-clicker-player-js
-Autoplay scripts for game "cookie clicker"
+Autoplay scripts for game "cookie clicker" //http://orteil.dashnet.org/cookieclicker/
+
