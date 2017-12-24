@@ -21,9 +21,15 @@ function getMostExpensiveProductId() {
 	return lastProductId; 
 }
 
-function isMakeSenseToUpgradeProduct(threshold = 5) {
-	// there is no point to upgrade first products at later gameplay, so update only more expensive products
-	return (getMostExpensiveProductId() + threshold  > getMostExpensiveUnclockedProductId() )
+function isMakeSenseToUpgradeProduct() {
+	var productId = getMostExpensiveProductId();
+	return isProductOwnedLessThan(productId);
+}
+
+function isProductOwnedLessThan(productId, threshold = 31) {
+	var productOwned = document.getElementById("productOwned" + productId);
+	console.log(productOwned.innerHTML)
+	return (productOwned.innerHTML < threshold)
 }
 
 async function buyProducts(sleepTime = 1) {
@@ -63,3 +69,4 @@ async function play(loopTimes = 10000, sleepTime = 1) {
 	}
 }
 play()
+
