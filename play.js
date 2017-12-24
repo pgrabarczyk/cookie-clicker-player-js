@@ -27,8 +27,12 @@ function isMakeSenseToUpgradeProduct() {
 }
 
 function isProductOwnedLessThan(productId, threshold = 31) {
+	const maxProductId = 14;
+	if( productId === maxProductId ) {
+		return true;
+	}
 	var productOwned = document.getElementById("productOwned" + productId);
-	return (productOwned.innerHTML < threshold)
+	return (productOwned.innerHTML < threshold);
 }
 
 async function buyProducts(sleepTime = 1) {
