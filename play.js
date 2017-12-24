@@ -28,7 +28,6 @@ function isMakeSenseToUpgradeProduct() {
 
 function isProductOwnedLessThan(productId, threshold = 31) {
 	var productOwned = document.getElementById("productOwned" + productId);
-	console.log(productOwned.innerHTML)
 	return (productOwned.innerHTML < threshold)
 }
 
@@ -69,4 +68,3 @@ async function play(loopTimes = 10000, sleepTime = 1) {
 	}
 }
 play()
-
