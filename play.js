@@ -4,9 +4,15 @@ function sleep(ms) {
 
 var cookie = document.getElementById("bigCookie");
 
-function buyUpgrade() {
-	var firstUpgrade = document.getElementById("upgrade0");
-	firstUpgrade.click()
+async function buyUpgrades(sleepTime = 1) {
+	var upgrades = document.getElementById("upgrades");
+	for( i=0; i< upgrades.childNodes.length ; i++) {
+		var upgrade = upgrades.childNodes[i];
+		if( upgrade.classList.contains("enabled") ) {
+			upgrade.click();
+			await sleep(sleepTime);
+		} else break;
+	}
 }
 
 function getMostExpensiveUnclockedProductId() {
@@ -67,8 +73,9 @@ async function play(loopTimes = 10000, sleepTime = 1) {
 			checkExtras();
 		}
 		
-		buyUpgrade();
+		buyUpgrades();
 		buyProducts();
 	}
 }
+
 play()
