@@ -11,7 +11,9 @@ async function buyUpgrades(sleepTime = 1) {
 		if( upgrade.classList.contains("enabled") ) {
 			upgrade.click();
 			await sleep(sleepTime);
-		} else break;
+			buyUpgrades();
+			break;
+		}
 	}
 }
 
