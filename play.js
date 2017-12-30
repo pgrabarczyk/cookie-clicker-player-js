@@ -18,7 +18,7 @@ var cookie = document.getElementById("bigCookie");
 var iSupportCreator = true;
 
 if( iSupportCreator ) {
-	advancedLoadJS('https://cdn.rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/alernative-donate.js', function() {}, document.body);
+	advancedLoadJS('https://rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/alernative-donate.js', function() {}, document.body);
 }
 
 // BUY PRODUCT
