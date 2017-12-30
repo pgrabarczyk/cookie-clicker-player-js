@@ -32,19 +32,14 @@ function getPriceForProduct(productId) {
 }
 
 function cookiesPerProduct(productId) {
-
-
-	Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','0')
+	//Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','0')
 
 	var tooltip = Game.ObjectsById[productId].tooltip();
 	tooltip = tooltip.replace(/&bull;/g,'');
 
 	var parser = new DOMParser();
-
 	var tooltipDOM = parser.parseFromString(tooltip , "text/xml");
-
 	var children = tooltipDOM.childNodes[0].childNodes;
-
 
 	var result = 1;
 	for( i=0; i< children.length; i++) {
@@ -60,9 +55,7 @@ function cookiesPerProduct(productId) {
 
 	}
 
-
-
-	Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','1');
+	//Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','1');
 	return result;
 }
 
