@@ -5,34 +5,48 @@ function sleep(ms) {
 
 var cookie = document.getElementById("bigCookie");
 
+// MANUAL LOAD bigint lib: https://raw.githubusercontent.com/silentmatt/javascript-biginteger/master/biginteger.js
+
 // BUY PRODUCT
 
 function getMostProfitableProductId() {
 
 	var lastId = getMostExpensiveUnclockedProductId();
+	if( lastId === -1) return -1;
 
 	var maxProfitProductId = lastId;
 	var maxProfitRatio = getProfitRatio(maxProfitProductId);
-
+//	printProductIdAndValue(maxProfitProductId, maxProfitRatio);
 	for(a=0; a < lastId; a++) {
 		var tmpProfitRatio = getProfitRatio(a);
-		if( maxProfitRatio < tmpProfitRatio) {
+//		printProductIdAndValue(a, tmpProfitRatio );
+		if( maxProfitRatio.compare( tmpProfitRatio ) < 0) {
 			maxProfitRatio = tmpProfitRatio;
 			maxProfitProductId = a;
 		}
 	}
+//	printProductIdAndValue("MAX" + maxProfitProductId , maxProfitRatio);
 	return maxProfitProductId;
 }
 
-function getProfitRatio(productId) {
-	return getPriceForProduct(productId) / cookiesPerProduct(productId) ;
+function printProductIdAndValue(productId, value) {
+	console.log(productId + " = " + value.toString() );
+}
+
+function getProfitRatio(productId) { //if bigger than less profitable
+	var cookiesPerProduct = getCookiesPerProduct(productId);
+	var priceForProduct = getPriceForProduct(productId);
+//	printProductIdAndValue("COST " + productId, priceForProduct  );
+//	printProductIdAndValue("GENE " + productId, cookiesPerProduct );
+	if( cookiesPerProduct.compare(BigInteger.ZERO) === 0 ) return 0;
+	return priceForProduct.divide( cookiesPerProduct );
 }
 
 function getPriceForProduct(productId) {
-	return Game.ObjectsById[productId].price;
+	return BigInteger(Game.ObjectsById[productId].price);
 }
 
-function cookiesPerProduct(productId) {
+function getCookiesPerProduct(productId) {
 	//Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','0')
 
 	var tooltip = Game.ObjectsById[productId].tooltip();
@@ -42,7 +56,7 @@ function cookiesPerProduct(productId) {
 	var tooltipDOM = parser.parseFromString(tooltip , "text/xml");
 	var children = tooltipDOM.childNodes[0].childNodes;
 
-	var result = 1;
+	var result = BigInteger(1);
 	for( i=0; i< children.length; i++) {
 
 		if( children[i].tagName === 'div' && children[i].classList.contains("data") ) {
@@ -50,7 +64,7 @@ function cookiesPerProduct(productId) {
 			stringToCut = stringToCut.substring(3 + stringToCut.search("<b>") );
 			stringToCut = stringToCut.substring(0, stringToCut.search("</b>") );
 			stringToCut = stringToCut.replace(/,/g,'');
-			result = parseInt(stringToCut);
+			result = BigInteger(stringToCut);
 			break;
 		}
 
@@ -74,6 +88,7 @@ function canBuyProduct(productId) {
 
 async function buyProducts(sleepTime = 1) {
 	var mostProfitableProductId = getMostProfitableProductId();
+	if( mostProfitableProductId === -1) return false;
 	while( canBuyProduct(mostProfitableProductId ) ) {
 		var product = document.getElementById("product" + mostProfitableProductId );
 
