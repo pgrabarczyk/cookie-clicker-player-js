@@ -9,14 +9,16 @@ var cookie = document.getElementById("bigCookie");
 
 function getMostProfitableProductId() {
 
-	var maxProfitProductId = getMostExpensiveUnclockedProductId();
+	var lastId = getMostExpensiveUnclockedProductId();
+
+	var maxProfitProductId = lastId;
 	var maxProfitRatio = getProfitRatio(maxProfitProductId);
 
-	for(i=0; i< maxProfitProductId; i++) {
-		var tmpProfitRatio = getProfitRatio(i);
-		if( maxProfitRatio > tmpProfitRatio) {
+	for(a=0; a < lastId; a++) {
+		var tmpProfitRatio = getProfitRatio(a);
+		if( maxProfitRatio < tmpProfitRatio) {
 			maxProfitRatio = tmpProfitRatio;
-			maxProfitProductId = i;
+			maxProfitProductId = a;
 		}
 	}
 	return maxProfitProductId;
