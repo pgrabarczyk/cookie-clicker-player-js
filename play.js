@@ -10,14 +10,19 @@ const maxProductId = 14;
 
 function getMostExpensiveUnclockedProductId() {
 	var products = document.getElementsByClassName("product unlocked");
-	var lastProductId = products.length;	
-	return lastProductId;
+	return getLastChildIdAsInt(products);
 }
 
 function getMostExpensiveProductId() {
 	var products = document.getElementsByClassName("product unlocked enabled");
-	var lastProductId = products.length;
-	return lastProductId; 
+	return getLastChildIdAsInt(products);
+}
+
+function getLastChildIdAsInt(products) {
+	if( products.length <= 0) return -1;
+	var lastProductIdString = products[products.length-1].id;
+	var lastProductId = lastProductIdString.replace("product",'');
+	return parseInt(lastProductId);
 }
 
 function isMakeSenseToUpgradeProduct() {
@@ -34,7 +39,7 @@ function isProductOwnedLessThan(productId, threshold = 31) {
 }
 
 async function buyProducts(sleepTime = 1) {
-	while( getMostExpensiveProductId() != -1 && ( maxProductId === getMostExpensiveUnclockedProductId() || isMakeSenseToUpgradeProduct()) ) {
+	while( getMostExpensiveProductId() != -1 && ( maxProductId  === getMostExpensiveUnclockedProductId() || isMakeSenseToUpgradeProduct()) ) {
 		var productId = "product" + getMostExpensiveProductId();
 		var product = document.getElementById(productId);
 		product.click();
