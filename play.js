@@ -1,5 +1,15 @@
 function getMostProfitableProduct() {
-	//TODO
+	var maxProfitProductId = getMostExpensiveUnclockedProductId();
+	var maxProfitRatio = getProfitRatio(maxProfitProductId);
+
+	for(i=0; i< maxProfitProductId; i++) {
+		var tmpProfitRatio = getProfitRatio(i);
+		if( maxProfitRatio > tmpProfitRatio) {
+			maxProfitRatio = tmpProfitRatio;
+			maxProfitProductId = i;
+		}
+	}
+	return maxProfitProductId;
 }
 
 function getProfitRatio(productId) {
@@ -27,7 +37,6 @@ function cookiesPerProduct(productId) {
 	for( i=0; i< children.length; i++) {
 
 		if( children[i].tagName === 'div' && children[i].classList.contains("data") ) {
-			console.log( children[i] );
 			var stringToCut = children[i].innerHTML;
 			stringToCut = stringToCut.substring(3 + stringToCut.search("<b>") );
 			stringToCut = stringToCut.substring(0, stringToCut.search("</b>") );
@@ -41,3 +50,5 @@ function cookiesPerProduct(productId) {
 
 	Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','1');
 }
+
+
