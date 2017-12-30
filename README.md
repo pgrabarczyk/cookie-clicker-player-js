@@ -11,10 +11,7 @@ All you need is just paste javascript code into browser console.
 
 The fastest way is to copy-paste this script onto your broweser console:
 ```
-var loadJS = function(url){
-    var scriptTag = document.createElement('script');
-    scriptTag.src = url;
-    document.body.appendChild(scriptTag);
-};
-loadJS('https://cdn.rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/play.js');
+var scriptTag = document.createElement('script');
+scriptTag.src = "https://rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/play.js";
+document.body.appendChild(scriptTag);
 ```
