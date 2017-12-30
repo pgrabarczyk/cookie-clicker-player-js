@@ -7,4 +7,6 @@ Fast description:
 - checkExtras() - checking is golen cookie or other extra is visible, if so then activate it
 - play() - use all functions to autoplay
 
-All you need is just paste javascript code into browser console.
+
+First paste bigint lib https://raw.githubusercontent.com/silentmatt/javascript-biginteger/master/biginteger.js
+Then paste javascript code into browser console.
