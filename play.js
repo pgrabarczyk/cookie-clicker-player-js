@@ -19,7 +19,6 @@ function getMostProfitableProductId() {
 			maxProfitProductId = i;
 		}
 	}
-
 	return maxProfitProductId;
 }
 
