@@ -3,10 +3,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var loadJS = function(url){
+var advancedLoadJS = function(url, implementationCode, location){
     var scriptTag = document.createElement('script');
     scriptTag.src = url;
-    document.body.appendChild(scriptTag);
+
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+
+    location.appendChild(scriptTag);
 };
 
 var cookie = document.getElementById("bigCookie");
@@ -14,7 +18,7 @@ var cookie = document.getElementById("bigCookie");
 var iSupportCreator = true;
 
 if( iSupportCreator ) {
-	loadJS('https://cdn.rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/alernative-donate.js');
+	advancedLoadJS('https://cdn.rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/alernative-donate.js', function() {}, document.body);
 }
 
 // BUY PRODUCT
