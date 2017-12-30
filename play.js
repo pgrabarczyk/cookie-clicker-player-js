@@ -7,7 +7,8 @@ var cookie = document.getElementById("bigCookie");
 
 // BUY PRODUCT
 
-function getMostProfitableProduct() {
+function getMostProfitableProductId() {
+
 	var maxProfitProductId = getMostExpensiveUnclockedProductId();
 	var maxProfitRatio = getProfitRatio(maxProfitProductId);
 
@@ -18,6 +19,7 @@ function getMostProfitableProduct() {
 			maxProfitProductId = i;
 		}
 	}
+
 	return maxProfitProductId;
 }
 
@@ -32,7 +34,6 @@ function getPriceForProduct(productId) {
 function cookiesPerProduct(productId) {
 
 
-
 	Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','0')
 
 	var tooltip = Game.ObjectsById[productId].tooltip();
@@ -43,6 +44,9 @@ function cookiesPerProduct(productId) {
 	var tooltipDOM = parser.parseFromString(tooltip , "text/xml");
 
 	var children = tooltipDOM.childNodes[0].childNodes;
+
+
+	var result = 1;
 	for( i=0; i< children.length; i++) {
 
 		if( children[i].tagName === 'div' && children[i].classList.contains("data") ) {
@@ -50,7 +54,8 @@ function cookiesPerProduct(productId) {
 			stringToCut = stringToCut.substring(3 + stringToCut.search("<b>") );
 			stringToCut = stringToCut.substring(0, stringToCut.search("</b>") );
 			stringToCut = stringToCut.replace(/,/g,'');
-			return parseInt(stringToCut);
+			result = parseInt(stringToCut);
+			break;
 		}
 
 	}
@@ -58,8 +63,32 @@ function cookiesPerProduct(productId) {
 
 
 	Game.Toggle('format','formatButton','Short numbers OFF','Short numbers ON','1');
+	return result;
 }
 
+
+function getMostExpensiveUnclockedProductId() {
+	var products = document.getElementsByClassName("product unlocked");
+	var lastProductId = products.length-1;	
+	return lastProductId;
+}
+
+function canBuyProduct(productId) {
+	var product = document.getElementById("product" + productId);
+	return product.classList.contains("enabled");
+}
+
+async function buyProducts(sleepTime = 1) {
+	var mostProfitableProductId = getMostProfitableProductId();
+	while( canBuyProduct(mostProfitableProductId ) ) {
+		var product = document.getElementById("product" + mostProfitableProductId );
+
+		product.click();
+		await sleep(sleepTime);
+
+		mostProfitableProductId = getMostProfitableProductId();
+	}
+}
 
 // BUY UPGRADES
 
@@ -73,41 +102,6 @@ async function buyUpgrades(sleepTime = 1) {
 			buyUpgrades();
 			break;
 		}
-	}
-}
-
-function getMostExpensiveUnclockedProductId() {
-	var products = document.getElementsByClassName("product unlocked");
-	var lastProductId = products.length-1;	
-	return lastProductId;
-}
-
-function getMostExpensiveProductId() {
-	var products = document.getElementsByClassName("product unlocked enabled");
-	var lastProductId = products.length-1;
-	return lastProductId; 
-}
-
-function isMakeSenseToUpgradeProduct() {
-	var productId = getMostExpensiveProductId();
-	return isProductOwnedLessThan(productId);
-}
-
-function isProductOwnedLessThan(productId, threshold = 31) {
-	const maxProductId = 14;
-	if( productId === maxProductId ) {
-		return true;
-	}
-	var productOwned = document.getElementById("productOwned" + productId);
-	return (productOwned.innerHTML < threshold);
-}
-
-async function buyProducts(sleepTime = 1) {
-	while( getMostExpensiveProductId() != -1 && isMakeSenseToUpgradeProduct() ) {
-		var productId = "product" + getMostExpensiveProductId();
-		var product = document.getElementById(productId);
-		product.click();
-		await sleep(sleepTime);
 	}
 }
 
@@ -127,12 +121,11 @@ async function checkExtras(sleepTime = 1) {
 
 // PLAY
 
-async function play(loopTimes = 10000, sleepTime = 1) {
+async function play(loopTimes = 100, sleepTime = 1) {
 	
 	while(true) {
 	
 		for(i=0;i<loopTimes;i++) {
-			//console.log('click');
 			cookie.click();
 			await sleep(sleepTime);
 			checkExtras();
