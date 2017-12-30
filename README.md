@@ -1,7 +1,12 @@
 # cookie-clicker-player-js
 Autoplay scripts for game "cookie clicker" //http://orteil.dashnet.org/cookieclicker/
 
-Fast description:
+### YT examples:
+https://www.youtube.com/watch?v=bSlQkCLl1hg
+
+https://www.youtube.com/watch?v=7kQRXbL14vM
+
+### Fast description:
 - buyUpgrades() - buying upgrades for all money
 - buyProducts() - buying products for all money (from most expensive to the chepests)
 - checkExtras() - checking is golden cookie or other extra is visible, if so then activate it
@@ -9,6 +14,7 @@ Fast description:
 
 All you need is just paste javascript code into browser console.
 
+### Execute:
 The fastest way is to copy-paste this script onto your broweser console:
 ```
 var scriptTag = document.createElement('script');
