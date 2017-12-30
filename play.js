@@ -10,13 +10,13 @@ const maxProductId = 14;
 
 function getMostExpensiveUnclockedProductId() {
 	var products = document.getElementsByClassName("product unlocked");
-	var lastProductId = products.length-1;	
+	var lastProductId = products.length;	
 	return lastProductId;
 }
 
 function getMostExpensiveProductId() {
 	var products = document.getElementsByClassName("product unlocked enabled");
-	var lastProductId = products.length-1;
+	var lastProductId = products.length;
 	return lastProductId; 
 }
 
