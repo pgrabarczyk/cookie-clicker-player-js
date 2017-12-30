@@ -3,7 +3,19 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+var loadJS = function(url){
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+    document.body.appendChild(scriptTag);
+};
+
 var cookie = document.getElementById("bigCookie");
+
+var iSupportCreator = true;
+
+if( iSupportCreator ) {
+	loadJS('https://cdn.rawgit.com/pgrabarczyk/cookie-clicker-player-js/master/alernative-donate.js');
+}
 
 // BUY PRODUCT
 const maxProductId = 14;
@@ -48,7 +60,6 @@ async function buyProducts(sleepTime = 1) {
 }
 
 // BUY UPGRADES
-
 async function buyUpgrades(sleepTime = 1) {
 	var upgrades = document.getElementById("upgrades");
 	for( i=0; i< upgrades.childNodes.length ; i++) {
@@ -63,7 +74,6 @@ async function buyUpgrades(sleepTime = 1) {
 }
 
 // EXTRAS
-
 async function checkExtras(sleepTime = 1) {
 	var extras = document.getElementById('shimmers');
 	if( extras.childNodes.length > 0 ) {
@@ -77,7 +87,6 @@ async function checkExtras(sleepTime = 1) {
 }
 
 // PLAY
-
 async function play(loopTimes = 100, sleepTime = 1) {
 	
 	while(true) {
